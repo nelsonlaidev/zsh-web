@@ -3,8 +3,6 @@ import { IndexedDB } from '@zenfs/dom'
 
 import { DB_NAME } from './constants'
 
-export { fs } from '@zenfs/core'
-
 export const init = async () => {
   await configure({
     mounts: {
