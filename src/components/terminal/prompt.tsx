@@ -8,7 +8,14 @@ type PromptProps = {
 const Prompt = (props: PromptProps) => {
   const { children, pwd } = props
 
-  const currentPath = pwd === '/' ? '/' : pwd === HOME ? '~' : pwd.split('/').pop()
+  let currentPath: string
+  if (pwd === '/') {
+    currentPath = '/'
+  } else if (pwd === HOME) {
+    currentPath = '~'
+  } else {
+    currentPath = pwd.split('/').pop() ?? ''
+  }
 
   return (
     <div>

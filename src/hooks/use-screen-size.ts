@@ -8,6 +8,7 @@ export const useScreenSize = () => {
 
   useEffect(() => {
     const handleResize = () => {
+      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- Valid usage
       setScreenSize({
         width: window.innerWidth,
         height: window.innerHeight

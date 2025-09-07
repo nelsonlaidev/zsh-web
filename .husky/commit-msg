@@ -1,2 +1,2 @@
-pnpm commitlint --edit "$1"
-cat $1 | pnpm cspell --no-progress --no-summary stdin
+pnpm commitlint --edit $1
+pnpm check:spelling $1

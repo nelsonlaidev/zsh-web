@@ -1,10 +1,13 @@
-import { cn } from '@tszhong0411/utils'
 import type { Metadata, Viewport } from 'next'
+
+import '@/styles/globals.css'
+
 import localFont from 'next/font/local'
 
-import './globals.css'
+import { env } from '@/env'
+import { cn } from '@/utils/cn'
 
-type RootLayoutProps = {
+type LayoutProps = {
   children: React.ReactNode
 }
 
@@ -60,11 +63,11 @@ const SFPro = localFont({
   variable: '--font-sf-pro'
 })
 
-const SITE_URL =
-  process.env.NODE_ENV === 'production' ? 'https://zsh.honghong.me' : 'http://localhost:3000'
+const MY_NAME = 'Nelson Lai'
+const SITE_URL = env.NEXT_PUBLIC_SITE_URL
 const SITE_DESCRIPTION =
   'Experience the power of Zsh on the web. Zsh Web is a simulation of the Zsh shell, allowing you to try shell commands in a browser-based environment.'
-const SITE_TITLE = 'Zsh Web | Nelson Lai - A Full Stack Engineer'
+const SITE_TITLE = 'Zsh Web'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -81,17 +84,24 @@ export const metadata: Metadata = {
       'max-snippet': -1
     }
   },
-  manifest: '/favicon/site.webmanifest',
+  authors: {
+    name: MY_NAME,
+    url: 'https://nelsonlai.me'
+  },
+  manifest: '/site.webmanifest',
   twitter: {
-    title: 'Hong',
     card: 'summary_large_image',
-    site: '@tszhong0411',
-    creator: '@tszhong0411',
+    title: MY_NAME,
+    description: SITE_DESCRIPTION,
+    site: '@nelsonlaidev',
+    siteId: '1152256803746377730',
+    creator: '@nelsonlaidev',
+    creatorId: '1152256803746377730',
     images: [
       {
-        url: 'https://honghong.me/images/projects/zsh-web/cover.png',
-        width: 1280,
-        height: 832,
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
         alt: SITE_DESCRIPTION
       }
     ]
@@ -100,7 +110,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL
   },
   keywords: ['zsh', 'zsh web', 'shell'],
-  creator: 'tszhong0411',
+  creator: 'nelsonlaidev',
   openGraph: {
     url: SITE_URL,
     type: 'website',
@@ -110,36 +120,45 @@ export const metadata: Metadata = {
     locale: 'en-US',
     images: [
       {
-        url: 'https://honghong.me/images/projects/zsh-web/cover.png',
-        width: 1280,
-        height: 832,
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
         alt: SITE_DESCRIPTION,
         type: 'image/png'
       }
     ]
   },
   icons: {
-    icon: '/favicon/favicon.ico',
-    shortcut: '/favicon/favicon.ico',
+    icon: {
+      rel: 'icon',
+      type: 'image/x-icon',
+      url: '/favicon.ico'
+    },
     apple: [
       {
-        url: '/favicon/apple-touch-icon.png',
-        sizes: '180x180',
-        type: 'image/png'
+        type: 'image/png',
+        url: '/apple-touch-icon.png',
+        sizes: '180x180'
       }
     ],
     other: [
       {
         rel: 'icon',
-        type: 'image/png',
-        sizes: '16x16',
-        url: '/favicon/favicon-16x16.png'
+        type: 'image/svg+xml',
+        url: '/favicon.svg',
+        sizes: 'any'
       },
       {
         rel: 'icon',
         type: 'image/png',
-        sizes: '32x32',
-        url: '/favicon/favicon-32x32.png'
+        url: '/favicon-16x16.png',
+        sizes: '16x16'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        url: '/favicon-32x32.png',
+        sizes: '32x32'
       }
     ]
   }
@@ -151,14 +170,14 @@ export const viewport: Viewport = {
   }
 }
 
-const RootLayout = (props: RootLayoutProps) => {
+const Layout = (props: LayoutProps) => {
   const { children } = props
 
   return (
     <html lang='en-US' className={cn(SFMono.variable, SFPro.variable)}>
-      <body className='bg-[#1e1e1e] font-default text-white'>{children}</body>
+      <body className='bg-[#1e1e1e] font-sans text-white'>{children}</body>
     </html>
   )
 }
 
-export default RootLayout
+export default Layout

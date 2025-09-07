@@ -8,7 +8,7 @@ const deleteIndexedDB = () => {
 
 const Debug = () => {
   return (
-    <div className='fixed bottom-2 right-2 z-50'>
+    <div className='fixed right-2 bottom-2 z-50'>
       <button type='button' onClick={deleteIndexedDB}>
         Delete IndexedDB
       </button>

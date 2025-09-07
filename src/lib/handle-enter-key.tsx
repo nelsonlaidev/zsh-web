@@ -1,6 +1,7 @@
+import type { Content, TerminalContextValue } from '@/contexts/terminal'
+
 import Prompt from '@/components/terminal/prompt'
 import PromptText from '@/components/terminal/prompt-text'
-import type { TerminalContext } from '@/contexts/terminal'
 
 import { cat } from './commands/cat'
 import { cd } from './commands/cd'
@@ -15,7 +16,7 @@ import { writeCommandHistory } from './fs'
 export type Output = (text: React.ReactNode) => void
 export type ReadInput = (text: string) => Promise<string>
 
-export const handleEnterKey = async (context: TerminalContext) => {
+export const handleEnterKey = async (context: TerminalContextValue) => {
   const {
     pwd: currentPath,
     input,
@@ -31,6 +32,34 @@ export const handleEnterKey = async (context: TerminalContext) => {
     appendContent(<div>{text}</div>)
   }
 
+  const updateContentWithInput = (text: string, value: string, prev: Content): Content => {
+    const lastIndex = prev.length - 1
+    const lastElement = prev.at(-1)
+
+    const updatedContent = [...prev]
+
+    if (!lastElement) return updatedContent
+
+    updatedContent[lastIndex] = {
+      ...lastElement,
+      element: (
+        <div>
+          {text}
+          {value}
+        </div>
+      )
+    }
+
+    return updatedContent
+  }
+
+  const handlePromptTextCallback = (text: string, value: string, resolve: (value: string) => void) => {
+    setIsReadingInput(false)
+    setInput('')
+    setContent((prev) => updateContentWithInput(text, value, prev))
+    resolve(value)
+  }
+
   const readInput = (text: string): Promise<string> => {
     setIsReadingInput(true)
 
@@ -40,29 +69,7 @@ export const handleEnterKey = async (context: TerminalContext) => {
           {text}
           <PromptText
             callback={(value) => {
-              setIsReadingInput(false)
-              setInput('')
-              setContent((prev) => {
-                const lastIndex = prev.length - 1
-                const lastElement = prev.at(-1)
-
-                const updatedContent = [...prev]
-
-                if (!lastElement) return updatedContent
-
-                updatedContent[lastIndex] = {
-                  ...lastElement,
-                  element: (
-                    <div>
-                      {text}
-                      {value}
-                    </div>
-                  )
-                }
-
-                return updatedContent
-              })
-              resolve(value)
+              handlePromptTextCallback(text, value, resolve)
             }}
           />
         </div>

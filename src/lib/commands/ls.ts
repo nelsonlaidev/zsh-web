@@ -1,14 +1,14 @@
+import type { Output } from '../handle-enter-key'
+import type { TerminalContextValue } from '@/contexts/terminal'
+
 import * as fs from '@zenfs/core/promises'
 
-import type { TerminalContext } from '@/contexts/terminal'
 import { getFsError } from '@/utils/get-fs-error'
 
-import type { Output } from '../handle-enter-key'
-
-const sortFiles = (files: string[]) => files.sort((a, b) => a.localeCompare(b))
+const sortFiles = (files: string[]) => files.toSorted((a, b) => a.localeCompare(b))
 const formatFiles = (files: string[]) => files.join('\n')
 
-export const ls = async (context: TerminalContext, args: string[], output: Output) => {
+export const ls = async (context: TerminalContextValue, args: string[], output: Output) => {
   const { pwd } = context
 
   if (args.length === 0) {
@@ -44,7 +44,9 @@ export const ls = async (context: TerminalContext, args: string[], output: Outpu
       const sortedFiles = sortFiles(files)
 
       output(`${arg}:\n${formatFiles(sortedFiles)}\n`)
-      index !== args.length - 1 && output('\n')
+      if (index !== args.length - 1) {
+        output('\n')
+      }
     } catch (error) {
       const fsError = getFsError(error)
 

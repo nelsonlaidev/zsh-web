@@ -1,6 +1,5 @@
-import { cn } from '@tszhong0411/utils'
-
 import { useWindowFocus } from '@/hooks/use-window-focus'
+import { cn } from '@/utils/cn'
 
 const Controls = () => {
   const isFocused = useWindowFocus()

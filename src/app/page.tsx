@@ -5,7 +5,7 @@ import { uid } from 'uid'
 
 import Debug from '@/components/debug'
 import Terminal from '@/components/terminal'
-import { type Content, type TerminalContext, TerminalProvider } from '@/contexts/terminal'
+import { type Content, type TerminalContextValue, TerminalProvider } from '@/contexts/terminal'
 import { HOME } from '@/lib/constants'
 import { init } from '@/lib/fs'
 
@@ -19,7 +19,7 @@ const Page = () => {
   const [isReadingInput, setIsReadingInput] = useState(false)
   const isInitialized = useRef(false)
 
-  const context = useMemo<TerminalContext>(
+  const context = useMemo<TerminalContextValue>(
     () => ({
       pwd,
       setPwd,

@@ -1,12 +1,12 @@
-import * as path from '@zenfs/core/emulation/path.js'
+import type { Output } from '../handle-enter-key'
+import type { TerminalContextValue } from '@/contexts/terminal'
+
+import * as path from '@zenfs/core/path'
 import * as fs from '@zenfs/core/promises'
 
-import type { TerminalContext } from '@/contexts/terminal'
 import { getFsError } from '@/utils/get-fs-error'
 
-import type { Output } from '../handle-enter-key'
-
-export const cat = async (context: TerminalContext, args: string[], output: Output) => {
+export const cat = async (context: TerminalContextValue, args: string[], output: Output) => {
   const { pwd } = context
 
   for (const arg of args) {

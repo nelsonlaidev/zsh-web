@@ -1,7 +1,8 @@
-import type { TerminalContext } from '@/contexts/terminal'
+import type { TerminalContextValue } from '@/contexts/terminal'
+
 import { splitStringAtIndex } from '@/utils/split-string-at-index'
 
-export const handleBackspaceKey = (context: TerminalContext) => {
+export const handleBackspaceKey = (context: TerminalContextValue) => {
   const { input, setInput, caretPosition, setCaretPosition } = context
 
   const [caretTextBefore, caretTextAfter] = splitStringAtIndex(input, caretPosition)

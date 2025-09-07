@@ -1,63 +1,59 @@
-<div align="center">
-  
-  ![](https://honghong.me/images/projects/zsh-web/cover.png)
-  
-  # Zsh Web (WIP)
+<p align="center">
+  <img src="public/icon.png" height="128">
+  <h1 align="center">Zsh Web (WIP)</h1>
+</p>
 
-</div>
+You can run commands like `ls`, `mkdir`, and `rm` on the web.
 
-## ✨ Features
+## Getting Started
 
-You can run commands like `ls`, `mkdir`, `rm` on web.
-
-## 💻 Installation
+Follow these steps to run the project locally on your machine:
 
 1. Clone the repository.
 
-```shell
-git clone https://github.com/tszhong0411/zsh-web.git
+```bash
+git clone https://github.com/nelsonlaidev/zsh-web.git
 ```
 
-2. Install dependencies.
+2. Navigate to the project directory.
 
-```shell
+```bash
+cd zsh-web
+```
+
+3. Install dependencies.
+
+```bash
 pnpm install
 ```
 
-3. Start the server.
+4. Run the development server.
 
-```shell
+```bash
 pnpm dev
 ```
 
-## ⚠️ Notice
+## Notice
 
 The project is still under development. Therefore, the code is still messy and the features are not complete.
 
-## 💡 Inspiration
+## Under the Hood
 
-This project can't be done without the following projects for inspiration:
+It is built using [`@zenfs/core`](https://github.com/zen-fs/core) and [`@zenfs/dom`](https://github.com/zen-fs/dom) for the file system emulation.
+
+## Inspiration
+
+This project was inspired by the following projects:
 
 - [react-terminal](https://github.com/bony2023/react-terminal)
 - [react-terminal-ui](https://github.com/jonmbake/react-terminal-ui)
 
-## 🪄 Under the Hood
-
-It is built using [`@zenfs/core`](https://github.com/zen-fs/core) and [`@zenfs/dom`](https://github.com/zen-fs/dom) for the file system emulation.
-
-## 🤝🏻 Contributing
-
-Contributions to Zsh Web are welcome! If you'd like to contribute new features, bug fixes, or improvements, please fork the repository, make your changes, and submit a pull request.
-
-## ❤️ Credits
-
-Zsh Web is developed and maintained by [tszhong0411](https://honghong.me).
-
-## 🪪 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
 
-<hr>
+---
+
 <p align="center">
 Made with ❤️ in Hong Kong
 </p>

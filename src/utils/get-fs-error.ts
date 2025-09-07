@@ -1,7 +1,7 @@
-import { ErrnoError } from '@zenfs/core'
+import { Exception } from 'kerium'
 
-export const getFsError = (error: unknown): ErrnoError | undefined => {
-  if (error instanceof ErrnoError) {
+export const getFsError = (error: unknown): Exception | undefined => {
+  if (error instanceof Exception) {
     return error
   }
 

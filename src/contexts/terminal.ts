@@ -1,11 +1,11 @@
-import { createContext, useContext } from 'react'
+import { createContext, use } from 'react'
 
 export type Content = Array<{
   id: string
   element: React.ReactElement
 }>
 
-export type TerminalContext = {
+export type TerminalContextValue = {
   pwd: string
   setPwd: React.Dispatch<React.SetStateAction<string>>
   showLastLoginMessage: boolean
@@ -23,10 +23,11 @@ export type TerminalContext = {
   setIsReadingInput: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Context = createContext<TerminalContext | undefined>(undefined)
+const TerminalContext = createContext<TerminalContextValue | undefined>(undefined)
+TerminalContext.displayName = 'TerminalContext'
 
-export const useTerminalContext = () => {
-  const context = useContext(Context)
+export const useTerminalContext = (): TerminalContextValue => {
+  const context = use(TerminalContext)
 
   if (!context) {
     throw new Error('useTerminalContext must be used within a TerminalProvider')
@@ -35,4 +36,4 @@ export const useTerminalContext = () => {
   return context
 }
 
-export const TerminalProvider = Context.Provider
+export const TerminalProvider = TerminalContext.Provider

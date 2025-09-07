@@ -1,8 +1,8 @@
-import type { TerminalContext } from '@/contexts/terminal'
+import type { TerminalContextValue } from '@/contexts/terminal'
 
 import { getCommandHistory } from './fs'
 
-export const handleArrowDownKey = (context: TerminalContext) => {
+export const handleArrowDownKey = (context: TerminalContextValue) => {
   const { setCaretPosition, setInput, historyIndex, setHistoryIndex } = context
 
   const history = getCommandHistory()

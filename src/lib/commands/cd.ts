@@ -1,13 +1,14 @@
-import * as path from '@zenfs/core/emulation/path.js'
+import type { Output } from '../handle-enter-key'
+import type { TerminalContextValue } from '@/contexts/terminal'
+
+import * as path from '@zenfs/core/path'
 import * as fs from '@zenfs/core/promises'
 
-import type { TerminalContext } from '@/contexts/terminal'
 import { getFsError } from '@/utils/get-fs-error'
 
 import { HOME } from '../constants'
-import type { Output } from '../handle-enter-key'
 
-export const cd = async (context: TerminalContext, args: string[], output: Output) => {
+export const cd = async (context: TerminalContextValue, args: string[], output: Output) => {
   const { pwd, setPwd } = context
 
   if (args.length === 0 || args[0] === '~') {
@@ -26,9 +27,7 @@ export const cd = async (context: TerminalContext, args: string[], output: Outpu
 
   if (!target) return
 
-  const normalizedPath = path.isAbsolute(target)
-    ? path.normalize(target)
-    : path.resolve(pwd, target)
+  const normalizedPath = path.isAbsolute(target) ? path.normalize(target) : path.resolve(pwd, target)
 
   try {
     const stats = await fs.stat(normalizedPath)

@@ -1,6 +1,6 @@
-import type { TerminalContext } from '@/contexts/terminal'
+import type { TerminalContextValue } from '@/contexts/terminal'
 
-export const handleArrowRightKey = (context: TerminalContext) => {
+export const handleArrowRightKey = (context: TerminalContextValue) => {
   const { input, caretPosition, setCaretPosition } = context
 
   if (caretPosition < input.length) setCaretPosition(caretPosition + 1)
