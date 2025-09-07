@@ -5,7 +5,7 @@
   "author": "Nelson Lai <me@nelsonlai.dev> (https://github.com/nelsonlaidev/)",
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "next build --turbo",
     "check": "pnpm lint && pnpm type-check && pnpm format:check && pnpm check:spelling && pnpm check:knip",
     "check:knip": "knip",
     "check:spelling": "cspell \"**\" --no-progress --no-summary --no-must-find-files --unique",
