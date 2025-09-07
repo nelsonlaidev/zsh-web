@@ -4,6 +4,7 @@ import '@/styles/globals.css'
 
 import localFont from 'next/font/local'
 
+import Analytics from '@/components/analytics'
 import { env } from '@/env'
 import { cn } from '@/utils/cn'
 
@@ -175,7 +176,10 @@ const Layout = (props: LayoutProps) => {
 
   return (
     <html lang='en-US' className={cn(SFMono.variable, SFPro.variable)}>
-      <body className='bg-[#1e1e1e] font-sans text-white'>{children}</body>
+      <body className='bg-[#1e1e1e] font-sans text-white'>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
