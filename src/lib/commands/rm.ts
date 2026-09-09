@@ -1,5 +1,5 @@
 import type { TerminalContextValue } from '@/contexts/terminal'
-import type { Output, ReadInput } from '../handle-enter-key'
+import type { Output, ReadInput } from '../key-handlers/types'
 
 import * as fs from '@zenfs/core/promises'
 import arg from 'arg'
