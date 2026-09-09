@@ -1,7 +1,7 @@
 import { configure, fs } from '@zenfs/core'
 import { IndexedDB } from '@zenfs/dom'
 
-import { DB_NAME } from './constants'
+import { DB_NAME } from '@/constants/zsh'
 
 export async function init() {
   await configure({

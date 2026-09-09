@@ -6,7 +6,7 @@ import { cn } from 'cn'
 import localFont from 'next/font/local'
 
 import { Analytics } from '@/components/analytics'
-import { MY_NAME, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, TWITTER_USER_ID, TWITTER_USERNAME } from '@/constants'
+import { MY_NAME, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, TWITTER_USER_ID, TWITTER_USERNAME } from '@/constants/site'
 
 const SFMono = localFont({
   src: [

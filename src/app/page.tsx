@@ -7,8 +7,8 @@ import { uid } from 'uid'
 
 import { Debug } from '@/components/debug'
 import { Terminal } from '@/components/terminal'
+import { HOME } from '@/constants/zsh'
 import { TerminalProvider } from '@/contexts/terminal'
-import { HOME } from '@/lib/constants'
 import { init } from '@/lib/fs'
 
 export default function Page() {

@@ -1,4 +1,4 @@
-import { HOME, HOSTNAME, USERNAME } from '@/lib/constants'
+import { HOME, HOSTNAME, USERNAME } from '@/constants/zsh'
 
 type PromptProps = {
   children: React.ReactNode

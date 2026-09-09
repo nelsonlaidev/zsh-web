@@ -4,9 +4,8 @@ import type { Output } from '../key-handlers/types'
 import * as path from '@zenfs/core/path'
 import * as fs from '@zenfs/core/promises'
 
+import { HOME } from '@/constants/zsh'
 import { getFsError } from '@/utils/get-fs-error'
-
-import { HOME } from '../constants'
 
 export async function cd(context: TerminalContextValue, args: string[], output: Output) {
   const { pwd, setPwd } = context

@@ -1,8 +1,8 @@
 import { cn } from 'cn'
 
+import { USERNAME } from '@/constants/zsh'
 import { useScreenSize } from '@/hooks/use-screen-size'
 import { useWindowFocus } from '@/hooks/use-window-focus'
-import { USERNAME } from '@/lib/constants'
 
 import { Controls } from './controls'
 

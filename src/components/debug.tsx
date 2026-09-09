@@ -1,6 +1,6 @@
 'use client'
 
-import { DB_NAME } from '@/lib/constants'
+import { DB_NAME } from '@/constants/zsh'
 
 function deleteIndexedDB() {
   indexedDB.deleteDatabase(DB_NAME)
