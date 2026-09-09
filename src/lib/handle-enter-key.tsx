@@ -16,6 +16,27 @@ import { writeCommandHistory } from './fs'
 export type Output = (text: React.ReactNode) => void
 export type ReadInput = (text: string) => Promise<string>
 
+const updateContentWithInput = (text: string, value: string, prev: Content): Content => {
+  const lastIndex = prev.length - 1
+  const lastElement = prev.at(-1)
+
+  const updatedContent = [...prev]
+
+  if (!lastElement) return updatedContent
+
+  updatedContent[lastIndex] = {
+    ...lastElement,
+    element: (
+      <div>
+        {text}
+        {value}
+      </div>
+    ),
+  }
+
+  return updatedContent
+}
+
 export const handleEnterKey = async (context: TerminalContextValue) => {
   const {
     pwd: currentPath,
@@ -25,32 +46,11 @@ export const handleEnterKey = async (context: TerminalContextValue) => {
     appendContent,
     setCaretPosition,
     setHistoryIndex,
-    setIsReadingInput
+    setIsReadingInput,
   } = context
 
   const output = (text: React.ReactNode) => {
     appendContent(<div>{text}</div>)
-  }
-
-  const updateContentWithInput = (text: string, value: string, prev: Content): Content => {
-    const lastIndex = prev.length - 1
-    const lastElement = prev.at(-1)
-
-    const updatedContent = [...prev]
-
-    if (!lastElement) return updatedContent
-
-    updatedContent[lastIndex] = {
-      ...lastElement,
-      element: (
-        <div>
-          {text}
-          {value}
-        </div>
-      )
-    }
-
-    return updatedContent
   }
 
   const handlePromptTextCallback = (text: string, value: string, resolve: (value: string) => void) => {
@@ -60,7 +60,7 @@ export const handleEnterKey = async (context: TerminalContextValue) => {
     resolve(value)
   }
 
-  const readInput = (text: string): Promise<string> => {
+  const readInput = async (text: string): Promise<string> => {
     setIsReadingInput(true)
 
     return new Promise((resolve) => {
@@ -72,7 +72,7 @@ export const handleEnterKey = async (context: TerminalContextValue) => {
               handlePromptTextCallback(text, value, resolve)
             }}
           />
-        </div>
+        </div>,
       )
     })
   }
@@ -113,19 +113,19 @@ export const handleEnterKey = async (context: TerminalContextValue) => {
       break
     }
     case 'ls': {
-      ls(context, args, output)
+      await ls(context, args, output)
       break
     }
     case 'rm': {
-      rm(context, args, output, readInput)
+      await rm(context, args, output, readInput)
       break
     }
     case 'cd': {
-      cd(context, args, output)
+      await cd(context, args, output)
       break
     }
     case 'cat': {
-      cat(context, args, output)
+      await cat(context, args, output)
       break
     }
     default: {

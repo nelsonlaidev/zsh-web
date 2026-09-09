@@ -1,5 +1,5 @@
-import type { Output, ReadInput } from '../handle-enter-key'
 import type { TerminalContextValue } from '@/contexts/terminal'
+import type { Output, ReadInput } from '../handle-enter-key'
 
 import * as fs from '@zenfs/core/promises'
 import arg from 'arg'
@@ -23,7 +23,7 @@ const ARG_SPEC = {
   '-r': '--recursive',
   '-v': '--verbose',
   '-W': Boolean,
-  '-x': Boolean
+  '-x': Boolean,
 } as const
 
 type ArgvType = arg.Result<typeof ARG_SPEC>
@@ -69,7 +69,7 @@ const processTarget = async (
   pwd: string,
   argv: ArgvType,
   output: Output,
-  readInput: ReadInput
+  readInput: ReadInput,
 ): Promise<void> => {
   try {
     const onSuccess = createSuccessHandler(target, argv['--verbose'], output)
@@ -93,7 +93,7 @@ export const rm = async (context: TerminalContextValue, args: string[], output: 
 
   const argv = arg(ARG_SPEC, {
     argv: args,
-    stopAtPositional: true
+    stopAtPositional: true,
   })
 
   const targets = argv._

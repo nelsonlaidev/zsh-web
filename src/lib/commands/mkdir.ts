@@ -1,5 +1,5 @@
-import type { Output } from '../handle-enter-key'
 import type { TerminalContextValue } from '@/contexts/terminal'
+import type { Output } from '../handle-enter-key'
 
 import * as fs from '@zenfs/core/promises'
 import arg from 'arg'
@@ -59,12 +59,12 @@ export const mkdir = async (context: TerminalContextValue, args: string[], outpu
 
       '-v': '--verbose',
       '-p': '--parents',
-      '-m': '--mode'
+      '-m': '--mode',
     },
     {
       argv: args,
-      stopAtPositional: true
-    }
+      stopAtPositional: true,
+    },
   )
 
   const dirs = argv._

@@ -1,7 +1,7 @@
-import type { NextConfig } from 'next'
-
 import './src/env'
 
-const nextConfig: NextConfig = {}
+import type { NextConfig } from 'next'
 
-export default nextConfig
+const config: NextConfig = {}
+
+export default config

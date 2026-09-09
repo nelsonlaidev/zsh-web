@@ -1,7 +1,8 @@
+import { cn } from 'cn'
+
 import { useScreenSize } from '@/hooks/use-screen-size'
 import { useWindowFocus } from '@/hooks/use-window-focus'
 import { USERNAME } from '@/lib/constants'
-import { cn } from '@/utils/cn'
 
 import Controls from './controls'
 
@@ -15,7 +16,7 @@ const TitleBar = () => {
       <div
         className={cn(
           'absolute top-1/2 left-1/2 -translate-1/2 font-bold',
-          isFocused ? 'text-[#b6b5b6]' : 'text-[#6d6c6d]'
+          isFocused ? 'text-[#b6b5b6]' : 'text-[#6d6c6d]',
         )}
       >
         {USERNAME} — -zsh — {width}x{height}

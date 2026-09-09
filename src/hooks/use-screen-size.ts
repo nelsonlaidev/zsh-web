@@ -1,28 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
+
+// oxlint-disable-next-line promise/prefer-await-to-callbacks
+const subscribe = (callback: () => void) => {
+  window.addEventListener('resize', callback)
+  return () => {
+    window.removeEventListener('resize', callback)
+  }
+}
+
+let cachedScreenSize = { width: 0, height: 0 }
+
+const getSnapshot = () => {
+  const current = { width: window.innerWidth, height: window.innerHeight }
+
+  if (current.width !== cachedScreenSize.width || current.height !== cachedScreenSize.height) {
+    cachedScreenSize = current
+  }
+
+  return cachedScreenSize
+}
+
+const getServerSnapshot = () => cachedScreenSize
 
 export const useScreenSize = () => {
-  const [screenSize, setScreenSize] = useState({
-    width: 0,
-    height: 0
-  })
-
-  useEffect(() => {
-    const handleResize = () => {
-      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- Valid usage
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      })
-    }
-
-    handleResize()
-
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
-  return screenSize
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
