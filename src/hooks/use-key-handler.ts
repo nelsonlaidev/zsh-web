@@ -58,7 +58,7 @@ export const useKeyHandler = () => {
         }
       }
     },
-    [context]
+    [context],
   )
 
   useEffect(() => {

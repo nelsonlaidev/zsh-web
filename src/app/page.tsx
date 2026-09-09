@@ -1,11 +1,13 @@
 'use client'
 
+import type { Content, TerminalContextValue } from '@/contexts/terminal'
+
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { uid } from 'uid'
 
 import Debug from '@/components/debug'
 import Terminal from '@/components/terminal'
-import { type Content, type TerminalContextValue, TerminalProvider } from '@/contexts/terminal'
+import { TerminalProvider } from '@/contexts/terminal'
 import { HOME } from '@/lib/constants'
 import { init } from '@/lib/fs'
 
@@ -17,7 +19,7 @@ const Page = () => {
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [content, setContent] = useState<Content>([])
   const [isReadingInput, setIsReadingInput] = useState(false)
-  const isInitialized = useRef(false)
+  const isInitializedRef = useRef(false)
 
   const context = useMemo<TerminalContextValue>(
     () => ({
@@ -38,20 +40,20 @@ const Page = () => {
           ...prev,
           {
             id: uid(),
-            element
-          }
+            element,
+          },
         ])
       },
       isReadingInput,
-      setIsReadingInput
+      setIsReadingInput,
     }),
-    [caretPosition, content, historyIndex, input, isReadingInput, pwd, showLastLoginMessage]
+    [caretPosition, content, historyIndex, input, isReadingInput, pwd, showLastLoginMessage],
   )
 
   useEffect(() => {
-    if (!isInitialized.current) {
-      init()
-      isInitialized.current = true
+    if (!isInitializedRef.current) {
+      void init()
+      isInitializedRef.current = true
     }
   }, [])
 

@@ -1,5 +1,5 @@
-import type { Output } from '../handle-enter-key'
 import type { TerminalContextValue } from '@/contexts/terminal'
+import type { Output } from '../handle-enter-key'
 
 import * as path from '@zenfs/core/path'
 import * as fs from '@zenfs/core/promises'
@@ -20,7 +20,7 @@ export const cat = async (context: TerminalContextValue, args: string[], output:
         return
       }
 
-      const content = await fs.readFile(filePath, 'utf8')
+      const content = await fs.readFile(filePath, 'utf-8')
       output(content)
     } catch (error) {
       const fsError = getFsError(error)

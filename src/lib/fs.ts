@@ -8,9 +8,9 @@ export const init = async () => {
     mounts: {
       '/': {
         backend: IndexedDB,
-        storeName: DB_NAME
-      }
-    }
+        storeName: DB_NAME,
+      },
+    },
   })
 
   if (!fs.existsSync('initialized')) {
@@ -21,7 +21,7 @@ export const init = async () => {
 }
 
 export const getCommandHistory = () => {
-  return JSON.parse(fs.readFileSync('terminal-history', 'utf8')) as string[]
+  return JSON.parse(fs.readFileSync('terminal-history', 'utf-8')) as string[]
 }
 
 export const writeCommandHistory = (command: string) => {

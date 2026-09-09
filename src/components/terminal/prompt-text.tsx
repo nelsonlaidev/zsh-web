@@ -17,10 +17,11 @@ const PromptText = (props: PromptTextProps) => {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
+        // oxlint-disable-next-line promise/prefer-await-to-callbacks
         callback?.(input)
       }
     },
-    [callback, input]
+    [callback, input],
   )
 
   useEffect(() => {

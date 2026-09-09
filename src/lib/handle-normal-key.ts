@@ -1,4 +1,5 @@
-import { type TerminalContextValue } from '@/contexts/terminal'
+import type { TerminalContextValue } from '@/contexts/terminal'
+
 import { splitStringAtIndex } from '@/utils/split-string-at-index'
 
 export const handleNormalKey = (context: TerminalContextValue, key: string) => {
