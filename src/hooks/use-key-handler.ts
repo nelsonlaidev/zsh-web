@@ -10,7 +10,7 @@ import { handleDeleteKey } from '@/lib/handle-delete-key'
 import { handleEnterKey } from '@/lib/handle-enter-key'
 import { handleNormalKey } from '@/lib/handle-normal-key'
 
-export const useKeyHandler = () => {
+export function useKeyHandler() {
   const context = useTerminalContext()
 
   const handleKey = useCallback(

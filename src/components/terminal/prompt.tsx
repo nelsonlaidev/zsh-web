@@ -5,7 +5,7 @@ type PromptProps = {
   pwd: string
 }
 
-const Prompt = (props: PromptProps) => {
+export function Prompt(props: PromptProps) {
   const { children, pwd } = props
 
   let currentPath: string
@@ -26,5 +26,3 @@ const Prompt = (props: PromptProps) => {
     </div>
   )
 }
-
-export default Prompt

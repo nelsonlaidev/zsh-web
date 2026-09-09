@@ -5,12 +5,12 @@ import { Fragment } from 'react'
 import { useTerminalContext } from '@/contexts/terminal'
 import { useKeyHandler } from '@/hooks/use-key-handler'
 
-import TitleBar from '../title-bar'
-import LastLoginMessage from './last-login-message'
-import Prompt from './prompt'
-import PromptText from './prompt-text'
+import { TitleBar } from '../title-bar'
+import { LastLoginMessage } from './last-login-message'
+import { Prompt } from './prompt'
+import { PromptText } from './prompt-text'
 
-const Terminal = () => {
+export function Terminal() {
   const { pwd, showLastLoginMessage, content, isReadingInput } = useTerminalContext()
 
   useKeyHandler()
@@ -32,5 +32,3 @@ const Terminal = () => {
     </>
   )
 }
-
-export default Terminal

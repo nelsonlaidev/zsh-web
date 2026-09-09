@@ -6,7 +6,7 @@ import * as fs from '@zenfs/core/promises'
 
 import { getFsError } from '@/utils/get-fs-error'
 
-export const cat = async (context: TerminalContextValue, args: string[], output: Output) => {
+export async function cat(context: TerminalContextValue, args: string[], output: Output) {
   const { pwd } = context
 
   for (const arg of args) {

@@ -26,7 +26,7 @@ export type TerminalContextValue = {
 const TerminalContext = createContext<TerminalContextValue | undefined>(undefined)
 TerminalContext.displayName = 'TerminalContext'
 
-export const useTerminalContext = (): TerminalContextValue => {
+export function useTerminalContext(): TerminalContextValue {
   const context = use(TerminalContext)
 
   if (!context) {

@@ -8,7 +8,7 @@ import { getFsError } from '@/utils/get-fs-error'
 
 import { HOME } from '../constants'
 
-export const cd = async (context: TerminalContextValue, args: string[], output: Output) => {
+export async function cd(context: TerminalContextValue, args: string[], output: Output) {
   const { pwd, setPwd } = context
 
   if (args.length === 0 || args[0] === '~') {

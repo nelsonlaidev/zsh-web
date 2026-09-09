@@ -1,4 +1,4 @@
-export const splitStringAtIndex = (value: string, index: number) => {
+export function splitStringAtIndex(value: string, index: number) {
   if (!value) {
     return ['', '']
   }

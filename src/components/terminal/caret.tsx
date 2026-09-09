@@ -2,7 +2,7 @@ import { cn } from 'cn'
 
 import { useWindowFocus } from '@/hooks/use-window-focus'
 
-const Caret = () => {
+export function Caret() {
   const isWindowFocused = useWindowFocus()
 
   return (
@@ -14,5 +14,3 @@ const Caret = () => {
     />
   )
 }
-
-export default Caret

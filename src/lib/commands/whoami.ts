@@ -1,5 +1,5 @@
 import type { Output } from '../handle-enter-key'
 
-export const whoami = (output: Output) => {
+export function whoami(output: Output) {
   output('user')
 }

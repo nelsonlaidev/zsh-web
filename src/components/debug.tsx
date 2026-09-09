@@ -2,11 +2,11 @@
 
 import { DB_NAME } from '@/lib/constants'
 
-const deleteIndexedDB = () => {
+function deleteIndexedDB() {
   indexedDB.deleteDatabase(DB_NAME)
 }
 
-const Debug = () => {
+export function Debug() {
   return (
     <div className='fixed right-2 bottom-2 z-50'>
       <button type='button' onClick={deleteIndexedDB}>
@@ -15,5 +15,3 @@ const Debug = () => {
     </div>
   )
 }
-
-export default Debug

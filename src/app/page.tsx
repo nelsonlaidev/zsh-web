@@ -5,13 +5,13 @@ import type { Content, TerminalContextValue } from '@/contexts/terminal'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { uid } from 'uid'
 
-import Debug from '@/components/debug'
-import Terminal from '@/components/terminal'
+import { Debug } from '@/components/debug'
+import { Terminal } from '@/components/terminal'
 import { TerminalProvider } from '@/contexts/terminal'
 import { HOME } from '@/lib/constants'
 import { init } from '@/lib/fs'
 
-const Page = () => {
+export default function Page() {
   const [pwd, setPwd] = useState(HOME)
   const [showLastLoginMessage, setShowLastLoginMessage] = useState(true)
   const [input, setInput] = useState('')
@@ -64,5 +64,3 @@ const Page = () => {
     </TerminalProvider>
   )
 }
-
-export default Page

@@ -2,7 +2,7 @@ import type { TerminalContextValue } from '@/contexts/terminal'
 
 import { getCommandHistory } from './fs'
 
-export const handleArrowUpKey = (context: TerminalContextValue) => {
+export function handleArrowUpKey(context: TerminalContextValue) {
   const { setCaretPosition, setInput, historyIndex, setHistoryIndex } = context
 
   const history = getCommandHistory()

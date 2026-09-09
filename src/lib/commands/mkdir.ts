@@ -6,7 +6,7 @@ import arg from 'arg'
 
 import { getFsError } from '@/utils/get-fs-error'
 
-const createParentDirs = async (dir: string, pwd: string, mode: number, verbose: boolean, output: Output) => {
+async function createParentDirs(dir: string, pwd: string, mode: number, verbose: boolean, output: Output) {
   const parts = dir.split('/')
   let currentPath = pwd
 
@@ -25,7 +25,7 @@ const createParentDirs = async (dir: string, pwd: string, mode: number, verbose:
   }
 }
 
-const createSingleDir = async (dir: string, pwd: string, mode: number, verbose: boolean, output: Output) => {
+async function createSingleDir(dir: string, pwd: string, mode: number, verbose: boolean, output: Output) {
   try {
     await fs.mkdir(`${pwd}/${dir}`, { mode })
     if (verbose) {
@@ -37,7 +37,7 @@ const createSingleDir = async (dir: string, pwd: string, mode: number, verbose: 
   }
 }
 
-const handleMkdirError = (error: unknown, dir: string, output: Output) => {
+function handleMkdirError(error: unknown, dir: string, output: Output) {
   const fsError = getFsError(error)
 
   if (fsError?.code === 'EEXIST') {
@@ -48,7 +48,7 @@ const handleMkdirError = (error: unknown, dir: string, output: Output) => {
   }
 }
 
-export const mkdir = async (context: TerminalContextValue, args: string[], output: Output) => {
+export async function mkdir(context: TerminalContextValue, args: string[], output: Output) {
   const { pwd } = context
 
   const argv = arg(

@@ -3,7 +3,7 @@ import { IndexedDB } from '@zenfs/dom'
 
 import { DB_NAME } from './constants'
 
-export const init = async () => {
+export async function init() {
   await configure({
     mounts: {
       '/': {
@@ -20,11 +20,11 @@ export const init = async () => {
   }
 }
 
-export const getCommandHistory = () => {
+export function getCommandHistory() {
   return JSON.parse(fs.readFileSync('terminal-history', 'utf-8')) as string[]
 }
 
-export const writeCommandHistory = (command: string) => {
+export function writeCommandHistory(command: string) {
   const history = getCommandHistory()
   const newHistory = [command, ...history]
 

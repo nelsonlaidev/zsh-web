@@ -1,6 +1,6 @@
 import type { TerminalContextValue } from '@/contexts/terminal'
 
-export const clear = (context: TerminalContextValue) => {
+export function clear(context: TerminalContextValue) {
   const { setContent, setShowLastLoginMessage } = context
 
   setContent([])

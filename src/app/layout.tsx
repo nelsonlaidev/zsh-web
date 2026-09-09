@@ -5,12 +5,8 @@ import type { Metadata, Viewport } from 'next'
 import { cn } from 'cn'
 import localFont from 'next/font/local'
 
-import Analytics from '@/components/analytics'
-import { env } from '@/env'
-
-type LayoutProps = {
-  children: React.ReactNode
-}
+import { Analytics } from '@/components/analytics'
+import { MY_NAME, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, TWITTER_USER_ID, TWITTER_USERNAME } from '@/constants'
 
 const SFMono = localFont({
   src: [
@@ -64,12 +60,6 @@ const SFPro = localFont({
   variable: '--font-sf-pro',
 })
 
-const MY_NAME = 'Nelson Lai'
-const SITE_URL = env.NEXT_PUBLIC_SITE_URL
-const SITE_DESCRIPTION =
-  'Experience the power of Zsh on the web. Zsh Web is a simulation of the Zsh shell, allowing you to try shell commands in a browser-based environment.'
-const SITE_TITLE = 'Zsh Web'
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_TITLE,
@@ -95,27 +85,24 @@ export const metadata: Metadata = {
     url: 'https://nelsonlai.dev',
   },
   openGraph: {
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_TITLE,
     type: 'website',
     locale: 'en-US',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: SITE_DESCRIPTION,
-        type: 'image/png',
-      },
-    ],
+    images: {
+      url: '/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: SITE_DESCRIPTION,
+      type: 'image/png',
+    },
   },
   twitter: {
     card: 'summary_large_image',
-    siteId: '1152256803746377730',
-    creator: '@nelsonlaidev',
-    creatorId: '1152256803746377730',
+    siteId: TWITTER_USER_ID,
+    creatorId: TWITTER_USER_ID,
+    site: `@${TWITTER_USERNAME}`,
+    creator: `@${TWITTER_USERNAME}`,
   },
   icons: {
     icon: {
@@ -159,7 +146,7 @@ export const viewport: Viewport = {
   },
 }
 
-const Layout = (props: LayoutProps) => {
+export default function Layout(props: LayoutProps<'/'>) {
   const { children } = props
 
   return (
@@ -171,5 +158,3 @@ const Layout = (props: LayoutProps) => {
     </html>
   )
 }
-
-export default Layout

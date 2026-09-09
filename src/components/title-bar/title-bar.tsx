@@ -4,9 +4,9 @@ import { useScreenSize } from '@/hooks/use-screen-size'
 import { useWindowFocus } from '@/hooks/use-window-focus'
 import { USERNAME } from '@/lib/constants'
 
-import Controls from './controls'
+import { Controls } from './controls'
 
-const TitleBar = () => {
+export function TitleBar() {
   const { width, height } = useScreenSize()
   const isFocused = useWindowFocus()
 
@@ -24,5 +24,3 @@ const TitleBar = () => {
     </div>
   )
 }
-
-export default TitleBar

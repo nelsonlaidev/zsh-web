@@ -2,7 +2,7 @@ import { cn } from 'cn'
 
 import { useWindowFocus } from '@/hooks/use-window-focus'
 
-const Controls = () => {
+export function Controls() {
   const isFocused = useWindowFocus()
 
   return (
@@ -31,5 +31,3 @@ const Controls = () => {
     </div>
   )
 }
-
-export default Controls

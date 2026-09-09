@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 
-export const useWindowFocus = () => {
+export function useWindowFocus() {
   const [isFocused, setIsFocused] = useState(true)
 
   useEffect(() => {
-    const onFocus = () => {
+    function onFocus() {
       setIsFocused(true)
     }
-    const onBlur = () => {
+
+    function onBlur() {
       setIsFocused(false)
     }
 

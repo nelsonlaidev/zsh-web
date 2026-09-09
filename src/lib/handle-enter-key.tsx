@@ -1,7 +1,7 @@
 import type { Content, TerminalContextValue } from '@/contexts/terminal'
 
-import Prompt from '@/components/terminal/prompt'
-import PromptText from '@/components/terminal/prompt-text'
+import { Prompt } from '@/components/terminal/prompt'
+import { PromptText } from '@/components/terminal/prompt-text'
 
 import { cat } from './commands/cat'
 import { cd } from './commands/cd'
@@ -16,7 +16,7 @@ import { writeCommandHistory } from './fs'
 export type Output = (text: React.ReactNode) => void
 export type ReadInput = (text: string) => Promise<string>
 
-const updateContentWithInput = (text: string, value: string, prev: Content): Content => {
+function updateContentWithInput(text: string, value: string, prev: Content): Content {
   const lastIndex = prev.length - 1
   const lastElement = prev.at(-1)
 
@@ -37,7 +37,7 @@ const updateContentWithInput = (text: string, value: string, prev: Content): Con
   return updatedContent
 }
 
-export const handleEnterKey = async (context: TerminalContextValue) => {
+export async function handleEnterKey(context: TerminalContextValue) {
   const {
     pwd: currentPath,
     input,
@@ -49,18 +49,18 @@ export const handleEnterKey = async (context: TerminalContextValue) => {
     setIsReadingInput,
   } = context
 
-  const output = (text: React.ReactNode) => {
+  function output(text: React.ReactNode) {
     appendContent(<div>{text}</div>)
   }
 
-  const handlePromptTextCallback = (text: string, value: string, resolve: (value: string) => void) => {
+  function handlePromptTextCallback(text: string, value: string, resolve: (value: string) => void) {
     setIsReadingInput(false)
     setInput('')
     setContent((prev) => updateContentWithInput(text, value, prev))
     resolve(value)
   }
 
-  const readInput = async (text: string): Promise<string> => {
+  async function readInput(text: string): Promise<string> {
     setIsReadingInput(true)
 
     return new Promise((resolve) => {

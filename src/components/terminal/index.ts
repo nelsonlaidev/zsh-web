@@ -1,1 +1,1 @@
-export { default } from './terminal'
+export { Terminal } from './terminal'

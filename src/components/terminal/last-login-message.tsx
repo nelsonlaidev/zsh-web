@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { TTY_NAME } from '@/lib/constants'
 
-const LastLoginMessage = () => {
+export function LastLoginMessage() {
   const [formattedDate] = useState(() => dayjs().format('ddd MMM DD HH:mm:ss'))
 
   return (
@@ -12,5 +12,3 @@ const LastLoginMessage = () => {
     </div>
   )
 }
-
-export default LastLoginMessage

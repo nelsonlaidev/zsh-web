@@ -28,7 +28,7 @@ const ARG_SPEC = {
 
 type ArgvType = arg.Result<typeof ARG_SPEC>
 
-const handleInteractivePrompt = async (target: string, readInput: ReadInput): Promise<boolean> => {
+async function handleInteractivePrompt(target: string, readInput: ReadInput): Promise<boolean> {
   const examineInput = await readInput(`examine files in directory ${target}? `)
   const examineResponse = examineInput.trim().toLowerCase()
 
@@ -42,7 +42,7 @@ const handleInteractivePrompt = async (target: string, readInput: ReadInput): Pr
   return removeResponse === 'y' || removeResponse === 'yes'
 }
 
-const createSuccessHandler = (target: string, verbose: boolean | undefined, output: Output) => {
+function createSuccessHandler(target: string, verbose: boolean | undefined, output: Output) {
   return () => {
     if (verbose) {
       output(target)
@@ -50,11 +50,11 @@ const createSuccessHandler = (target: string, verbose: boolean | undefined, outp
   }
 }
 
-const removeFileOrDirectory = async (pwd: string, target: string, recursive: boolean | undefined): Promise<void> => {
+async function removeFileOrDirectory(pwd: string, target: string, recursive: boolean | undefined): Promise<void> {
   await (recursive ? fs.rm(`${pwd}/${target}`, { recursive: true }) : fs.unlink(`${pwd}/${target}`))
 }
 
-const handleRemovalError = (error: unknown, target: string, output: Output): void => {
+function handleRemovalError(error: unknown, target: string, output: Output): void {
   const fsError = getFsError(error)
 
   if (fsError?.code === 'ENOENT') {
@@ -64,13 +64,13 @@ const handleRemovalError = (error: unknown, target: string, output: Output): voi
   }
 }
 
-const processTarget = async (
+async function processTarget(
   target: string,
   pwd: string,
   argv: ArgvType,
   output: Output,
   readInput: ReadInput,
-): Promise<void> => {
+): Promise<void> {
   try {
     const onSuccess = createSuccessHandler(target, argv['--verbose'], output)
 
@@ -88,7 +88,7 @@ const processTarget = async (
   }
 }
 
-export const rm = async (context: TerminalContextValue, args: string[], output: Output, readInput: ReadInput) => {
+export async function rm(context: TerminalContextValue, args: string[], output: Output, readInput: ReadInput) {
   const { pwd } = context
 
   const argv = arg(ARG_SPEC, {

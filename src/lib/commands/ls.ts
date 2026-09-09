@@ -5,10 +5,15 @@ import * as fs from '@zenfs/core/promises'
 
 import { getFsError } from '@/utils/get-fs-error'
 
-const sortFiles = (files: string[]) => files.toSorted((a, b) => a.localeCompare(b))
-const formatFiles = (files: string[]) => files.join('\n')
+function sortFiles(files: string[]) {
+  return files.toSorted((a, b) => a.localeCompare(b))
+}
 
-export const ls = async (context: TerminalContextValue, args: string[], output: Output) => {
+function formatFiles(files: string[]) {
+  return files.join('\n')
+}
+
+export async function ls(context: TerminalContextValue, args: string[], output: Output) {
   const { pwd } = context
 
   if (args.length === 0) {
