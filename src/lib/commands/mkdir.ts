@@ -20,7 +20,7 @@ async function createParentDirs(dir: string, pwd: string, mode: number, verbose:
     } catch (error) {
       const fsError = getFsError(error)
       if (fsError?.code === 'EEXIST') continue
-      console.log({ error, verbose, parents: true })
+      handleMkdirError(error, part, output)
     }
   }
 }
@@ -32,7 +32,6 @@ async function createSingleDir(dir: string, pwd: string, mode: number, verbose: 
       output(dir)
     }
   } catch (error) {
-    console.log({ error, verbose, parents: false })
     handleMkdirError(error, dir, output)
   }
 }
@@ -48,24 +47,31 @@ function handleMkdirError(error: unknown, dir: string, output: Output) {
   }
 }
 
+const ARG_SPEC = {
+  '--verbose': Boolean,
+  '--parents': Boolean,
+  '--mode': Number,
+
+  '-v': '--verbose',
+  '-p': '--parents',
+  '-m': '--mode',
+} as const
+
 export async function mkdir(context: TerminalContextValue, args: string[], output: Output) {
   const { pwd } = context
 
-  const argv = arg(
-    {
-      '--verbose': Boolean,
-      '--parents': Boolean,
-      '--mode': Number,
+  let argv: arg.Result<typeof ARG_SPEC>
 
-      '-v': '--verbose',
-      '-p': '--parents',
-      '-m': '--mode',
-    },
-    {
+  try {
+    argv = arg(ARG_SPEC, {
       argv: args,
       stopAtPositional: true,
-    },
-  )
+    })
+  } catch (error) {
+    output(`mkdir: ${error instanceof Error ? error.message : 'invalid arguments'}`)
+
+    return
+  }
 
   const dirs = argv._
 

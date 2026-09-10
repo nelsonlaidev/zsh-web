@@ -17,7 +17,7 @@ export async function cat(context: TerminalContextValue, args: string[], output:
 
       if (target.isDirectory()) {
         output(`cat: ${arg}: Is a directory`)
-        return
+        continue
       }
 
       const content = await fs.readFile(filePath, 'utf-8')

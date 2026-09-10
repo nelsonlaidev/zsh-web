@@ -1,6 +1,7 @@
 import type { TerminalContextValue } from '@/contexts/terminal'
 import type { Output } from '../key-handlers/types'
 
+import * as path from '@zenfs/core/path'
 import * as fs from '@zenfs/core/promises'
 
 import { getFsError } from '@/utils/get-fs-error'
@@ -16,41 +17,25 @@ function formatFiles(files: string[]) {
 export async function ls(context: TerminalContextValue, args: string[], output: Output) {
   const { pwd } = context
 
-  if (args.length === 0) {
-    const files = await fs.readdir(pwd)
-    const sortedFiles = sortFiles(files)
-    output(formatFiles(sortedFiles))
+  const targets = args.length === 0 ? [pwd] : args
 
-    return
-  }
+  for (const arg of targets) {
+    const targetPath = path.resolve(pwd, arg)
 
-  if (args.length === 1) {
     try {
-      await fs.stat(`${pwd}/${args[0]}`)
-      const files = await fs.readdir(`${pwd}/${args[0]}`)
-      const sortedFiles = sortFiles(files)
-      output(formatFiles(sortedFiles))
-    } catch (error) {
-      const fsError = getFsError(error)
+      const stats = await fs.stat(targetPath)
 
-      if (fsError?.code === 'ENOENT') {
-        output(`ls: ${args[0]}: No such file or directory`)
-      }
-    }
+      if (stats.isDirectory()) {
+        const files = await fs.readdir(targetPath)
+        const formattedFiles = formatFiles(sortFiles(files))
 
-    return
-  }
-
-  for (const [index, arg] of args.entries()) {
-    try {
-      await fs.stat(`${pwd}/${arg}`)
-
-      const files = await fs.readdir(`${pwd}/${arg}`)
-      const sortedFiles = sortFiles(files)
-
-      output(`${arg}:\n${formatFiles(sortedFiles)}\n`)
-      if (index !== args.length - 1) {
-        output('\n')
+        if (targets.length > 1) {
+          output(`${arg}:\n${formattedFiles}`)
+        } else {
+          output(formattedFiles)
+        }
+      } else {
+        output(arg)
       }
     } catch (error) {
       const fsError = getFsError(error)

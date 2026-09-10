@@ -10,20 +10,15 @@ const ARG_SPEC = {
   '--force': Boolean,
   '--interactive': Boolean,
   '--dir': Boolean,
-  '--preserve-root': Boolean,
   '--recursive': Boolean,
   '--verbose': Boolean,
 
   '-f': '--force',
   '-i': '--interactive',
   '-d': '--dir',
-  '-I': Boolean,
-  '-P': '--preserve-root',
   '-R': '--recursive',
   '-r': '--recursive',
   '-v': '--verbose',
-  '-W': Boolean,
-  '-x': Boolean,
 } as const
 
 type ArgvType = arg.Result<typeof ARG_SPEC>
@@ -50,17 +45,44 @@ function createSuccessHandler(target: string, verbose: boolean | undefined, outp
   }
 }
 
-async function removeFileOrDirectory(pwd: string, target: string, recursive: boolean | undefined): Promise<void> {
-  await (recursive ? fs.rm(`${pwd}/${target}`, { recursive: true }) : fs.unlink(`${pwd}/${target}`))
+async function removeFileOrDirectory(
+  pwd: string,
+  target: string,
+  recursive: boolean | undefined,
+  dir: boolean | undefined,
+): Promise<void> {
+  const targetPath = `${pwd}/${target}`
+
+  if (recursive) {
+    await fs.rm(targetPath, { recursive: true })
+  } else if (dir) {
+    try {
+      await fs.rmdir(targetPath)
+    } catch (error) {
+      if (getFsError(error)?.code === 'ENOTDIR') {
+        await fs.unlink(targetPath)
+      } else {
+        throw error
+      }
+    }
+  } else {
+    await fs.unlink(targetPath)
+  }
 }
 
-function handleRemovalError(error: unknown, target: string, output: Output): void {
+function handleRemovalError(error: unknown, target: string, output: Output, force: boolean | undefined): void {
   const fsError = getFsError(error)
 
   if (fsError?.code === 'ENOENT') {
-    output(`rm: ${target}: No such file or directory`)
+    if (!force) {
+      output(`rm: ${target}: No such file or directory`)
+    }
   } else if (fsError?.code === 'EISDIR') {
     output(`rm: ${target}: is a directory`)
+  } else if (fsError?.code === 'ENOTEMPTY') {
+    output(`rm: ${target}: Directory not empty`)
+  } else if (fsError?.code === 'ENOTDIR') {
+    output(`rm: ${target}: Not a directory`)
   }
 }
 
@@ -81,25 +103,33 @@ async function processTarget(
       if (!shouldProceed) return
     }
 
-    await removeFileOrDirectory(pwd, target, argv['--recursive'])
+    await removeFileOrDirectory(pwd, target, argv['--recursive'], argv['--dir'])
     onSuccess()
   } catch (error) {
-    handleRemovalError(error, target, output)
+    handleRemovalError(error, target, output, argv['--force'])
   }
 }
 
 export async function rm(context: TerminalContextValue, args: string[], output: Output, readInput: ReadInput) {
   const { pwd } = context
 
-  const argv = arg(ARG_SPEC, {
-    argv: args,
-    stopAtPositional: true,
-  })
+  let argv: ArgvType
+
+  try {
+    argv = arg(ARG_SPEC, {
+      argv: args,
+      stopAtPositional: true,
+    })
+  } catch (error) {
+    output(`rm: ${error instanceof Error ? error.message : 'invalid arguments'}`)
+
+    return
+  }
 
   const targets = argv._
 
   if (targets.length === 0) {
-    output('usage: rm [-f | -i] [-dIPRrvWx] file ...\n       unlink [--] file')
+    output('usage: rm [-f | -i] [-dRrv] file ...')
     return
   }
 
