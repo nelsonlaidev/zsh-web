@@ -11,6 +11,7 @@ import { ls } from '../commands/ls'
 import { mkdir } from '../commands/mkdir'
 import { pwd } from '../commands/pwd'
 import { rm } from '../commands/rm'
+import { touch } from '../commands/touch'
 import { whoami } from '../commands/whoami'
 import { getCommandHistory, writeCommandHistory } from '../fs'
 
@@ -124,6 +125,10 @@ async function handleEnterKey(context: TerminalContextValue) {
     }
     case 'cat': {
       await cat(context, args, output)
+      break
+    }
+    case 'touch': {
+      await touch(context, args, output)
       break
     }
     default: {
